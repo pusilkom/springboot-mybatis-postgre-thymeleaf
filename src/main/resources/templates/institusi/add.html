@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Demo App - Add Institusi</title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+<div class="container">
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Tambah Institusi</h4></div>
+
+        <div class="panel-body">
+            <form method="post" th:action="@{/institusi/add}" th:object="${institusiCmd}" class="form-horizontal">
+                <div class="form-group" th:classappend="${#fields.hasErrors('kodeInstitusi')} ? has-error">
+                    <label class="col-sm-2 control-label">Kode Institusi</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{kodeInstitusi}" />
+                        <span class="help-block" th:errors="*{kodeInstitusi}"/>
+                    </div>
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('nama')} ? has-error">
+                    <label class="col-sm-2 control-label">Nama</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{nama}" />
+                        <span class="help-block" th:errors="*{nama}"/>
+                    </div>
+                </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('namaSingkat')} ? has-error">
+                    <label class="col-sm-2 control-label">Nama Singkat</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:field="*{namaSingkat}" />
+                        <span class="help-block" th:errors="*{namaSingkat}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Aktif ?</label>
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" th:field="*{flagAktif}" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-danger">Simpan</button>
+                        <a th:href="@{/institusi}" class="btn btn-default">Kembali</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

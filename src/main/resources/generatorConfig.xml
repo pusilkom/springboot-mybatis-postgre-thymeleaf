@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="/Users/fahri/.m2/repository/org/postgresql/postgresql/9.4.1212/postgresql-9.4.1212.jar"/>
+    <!--<classPathEntry location="/Users/fahri/.m2/repository/com/oracle/oracle/11.2.0.4/oracle-11.2.0.4.jar"/>-->
+    <!--<classPathEntry location="C:///Users/Ruliantyo/.m2/repository/com/oracle/oracle/11.2.0.4/oracle-11.2.0.4.jar"/>-->
+
+    <context id="TheContext" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+<!--        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"></property>
+            <property name="replaceString" value="Query"></property>
+        </plugin>-->
+
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="org.postgresql.Driver"
+                        connectionURL="jdbc:postgresql://localhost:5432/demodb"
+                        userId="demouser"
+                        password="demopwd">
+        </jdbcConnection><!-- ubah userId dan password sesuai dengan synonym-->
+
+        <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"-->
+        <!--connectionURL="jdbc:oracle:thin:@//127.0.0.1:1521/xe"-->
+        <!--userId="artajasa_corporate_payment"-->
+        <!--password="artajasa123">-->
+        <!--</jdbcConnection>&lt;!&ndash; ubah userId dan password sesuai dengan synonym&ndash;&gt;-->
+
+        <javaModelGenerator targetPackage="com.pusilkom.demo.model" targetProject="src/main/java">
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.pusilkom.demo.model.mapper"  targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.pusilkom.artajasa.corporatepayment.model.mapper" targetProject="src/main/java">-->
+        <!--</javaClientGenerator>-->
+
+        <!-- ubah schema dan tableName sesuai dengan synonym-->
+        <table schema="public" tableName="%">
+            <!--<table schema="artajasa_corporate_payment"-->
+            <!--tableName="invoice"> &lt;!&ndash; tableName="%" utk generate semua table&ndash;&gt;-->
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <!--uncomment below line to activate synonym-->
+            <!--<property name="runtimeTableName" value="syn_sia_barang_transaksi" />-->
+        </table>
+
+
+        <!--Running Command-->
+        <!--mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate-->
+    
+    </context>
+</generatorConfiguration>

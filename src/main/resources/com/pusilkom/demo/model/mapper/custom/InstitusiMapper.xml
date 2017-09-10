@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pusilkom.demo.model.mapper.InstitusiMapper">
+  <resultMap id="InstitusiDetailResultMap" type="com.pusilkom.demo.dto.view.InstitusiDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="kode_institusi" jdbcType="VARCHAR" property="kodeInstitusi" />
+    <result column="nama" jdbcType="VARCHAR" property="nama" />
+    <result column="nama_singkat" jdbcType="VARCHAR" property="namaSingkat" />
+    <result column="flag_aktif" jdbcType="BIT" property="flagAktif" />
+  </resultMap>
+  <resultMap id="InstitusiItemResultMap" type="com.pusilkom.demo.dto.table.InstitusiItem">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="kode_institusi" jdbcType="VARCHAR" property="kodeInstitusi" />
+    <result column="nama" jdbcType="VARCHAR" property="nama" />
+    <result column="nama_singkat" jdbcType="VARCHAR" property="namaSingkat" />
+    <result column="flag_aktif" jdbcType="BIT" property="flagAktif" />
+  </resultMap>
+
+  <select id="getInstitusiDetailByKodeInstitusiCara3" resultMap="InstitusiDetailResultMap">
+    SELECT
+      *
+    FROM institusi
+    WHERE
+      kode_institusi = #{kodeInstitusi}
+    LIMIT 1
+  </select>
+
+<sql id="Main_Query">
+    SELECT * FROM institusi
+  </sql>
+  <sql id="Criteria_Where_Clause">
+    <where>
+      <if test="searchForm.kodeInstitusi != ''">
+        AND upper(kode_institusi) LIKE '%' || upper(#{searchForm.kodeInstitusi}) || '%'
+      </if>
+      <if test="searchForm.nama != ''">
+        AND upper(nama) LIKE '%' || upper(#{searchForm.nama}) || '%'
+      </if>
+      <if test="searchForm.namaSingkat != ''">
+        AND upper(nama_singkat) LIKE '%' || upper(#{searchForm.namaSingkat}) || '%'
+      </if>
+      <if test="searchForm.flagAktif != null">
+        AND flag_aktif = #{searchForm.flagAktif}
+      </if>
+    </where>
+
+    ${searchForm.orderQuery}
+  </sql>
+
+  <select id="getListInstitusiItemBySearchForm" resultMap="InstitusiItemResultMap" parameterType="map">
+
+    <include refid="Main_Query"/>
+    <include refid="Criteria_Where_Clause"/>
+
+    OFFSET #{searchForm.criterias.start} LIMIT #{searchForm.criterias.length}
+  </select>
+
+  <select id="getTotalInstitusiItemBySearchForm" resultType="java.lang.Long" parameterType="map">
+    SELECT COUNT(*) FROM
+    (
+    <include refid="Main_Query"/>
+    <include refid="Criteria_Where_Clause"/>
+    ) as foo
+  </select>
+
+</mapper>

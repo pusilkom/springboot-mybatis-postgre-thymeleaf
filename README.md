@@ -14,7 +14,7 @@ Layer
 ------
 
   - Model : Representasi data di DB
-  - Model Mapper : Query data dan mapping hasilnya menjadi Model atau DTO. Baca [[/w/mybatis/]]
+  - Model Mapper : Query data dan mapping hasilnya menjadi Model atau DTO.
   - Service : Business process
   - Controller : Routing request untuk diproses oleh Service kemudian mengembalikan response
   - DTO (Data Transfer Object) : Representasi data input/output
